@@ -1,0 +1,3 @@
+#!/bin/sh -e
+
+test "x$(php -dextension="protobuf" -m | grep "protobuf")" != "x"

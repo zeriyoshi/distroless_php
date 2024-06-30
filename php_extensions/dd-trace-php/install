@@ -1,0 +1,19 @@
+#!/bin/sh -e
+
+# ------------------------------------------------
+# See: https://github.com/DataDog/dd-trace-php
+# ------------------------------------------------
+
+apt-get update \
+&& apt-get install -y "curl" "libcurl4-openssl-dev" \
+&& curl "https://sh.rustup.rs" -sSf | sh -s -- -y \
+&& cd "src" \
+&& phpize \
+&& CFLAGS="${DISTROLESS_PHP_CFLAGS} ${DISTROLESS_CFLAGS}" \
+   CPPFLAGS="${DISTROLESS_PHP_CPPFLAGS} ${DISTROLESS_CPPFLAGS}" \
+   LDFLAGS="${DISTROLESS_PHP_LDFLAGS} ${DISTROLESS_LDFLAGS}" \
+   ./configure \
+     --with-php-config="$(which "php-config")" \
+     --with-ddtrace-cargo="/root/.cargo/bin/cargo" \
+&& make install \
+&& cd - 
