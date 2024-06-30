@@ -22,7 +22,6 @@ permissions:
 jobs:
   build:
     strategy:
-      max-parallel: 2
       matrix:
         platforms: ["linux/amd64"]
         image_type: ["canary", "latest"]
