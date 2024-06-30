@@ -1,0 +1,17 @@
+#!/bin/sh -e
+
+cd "src" \
+&& EXTRA_DEFINES=GRPC_POSIX_FORK_ALLOW_PTHREAD_ATFORK make -j"$(nproc)" \
+&& cd "src/php/ext/grpc" \
+&&   phpize \
+&&   CFLAGS="${DISTROLESS_PHP_CFLAGS} ${DISTROLESS_CFLAGS}" \
+     CPPFLAGS="${DISTROLESS_PHP_CPPFLAGS} ${DISTROLESS_CPPFLAGS}" \
+     LDFLAGS="${DISTROLESS_PHP_LDFLAGS} ${DISTROLESS_LDFLAGS}" \
+     GRPC_LIB_SUBDIR="libs/opt" \
+     ./configure \
+       --enable-grpc="../../../.." \
+       --with-php-config="$(which "php-config")" \
+&&   make -j"$(nproc)" \
+&&   make install \
+&& cd - \
+&& cd -

@@ -1,0 +1,87 @@
+name: Build latest / canary image
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 3 * * *'
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+    branches: 
+      - main
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  packages: write
+
+jobs:
+  build:
+    strategy:
+      max-parallel: 2
+      matrix:
+        platforms: ["linux/amd64"]
+        image_type: ["canary", "latest"]
+        distroless_tag: ["latest", "debug"]
+        php_version: ["8.2", "8.3"] # 8.1 currently not support libxml2 >= 2.13.0, wait next release
+    runs-on: ubuntu-latest
+    continue-on-error: ${{ github.event_name == 'schedule' }}
+    if: (github.event_name == 'pull_request_target' && github.actor == 'github-actions') || github.event_name != 'pull_request_target'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+      - name: Merge Renovate pull requets
+        if: ${{ matrix.image_type == 'canary' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr list --json number,title --jq '.[] | select(.title | startswith("Update dependency"))' | \
+          while read -r pr; do
+            number=$(echo $pr | jq -r .number)
+            echo "Processing PR #${number}"
+            gh pr checkout "${number}"
+            git merge --no-commit --no-ff FETCH_HEAD
+          done
+          git checkout "${{ github.sha }}" -- . ':!third_party' ':!php_extensions'
+      - name: Checkout latest PHP versions
+        run: |
+          cd "third_party/php/php-src"
+          git checkout "$(git tag | grep -E "^php-${{ matrix.php_version }}.[0-9]+$" | sort -V | tail -n1)"
+      - name: Prepare tag suffix
+        id: tag_suffix
+        run: |
+          if test "x${{ matrix.distroless_tag }}" == "xlatest"; then
+            echo "suffix=" >> $GITHUB_OUTPUT
+          else
+            echo "suffix=-${{ matrix.distroless_tag }}" >> $GITHUB_OUTPUT
+          fi
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: "arm64"
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to GitHub Packages Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and Push
+        uses: docker/build-push-action@v5
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+        with:
+          context: .
+          push: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          build-args: |
+            PLATFORM=${{ matrix.platforms }}
+            DISTROLESS_TAG=${{ matrix.distroless_tag }}
+          tags: ghcr.io/${{ github.repository }}:${{ matrix.php_version }}-${{ matrix.image_type }}${{ steps.tag_suffix.outputs.suffix }}
