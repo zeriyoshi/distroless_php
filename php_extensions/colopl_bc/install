@@ -1,0 +1,11 @@
+#!/bin/sh -e
+
+cd "src/ext" \
+&& phpize \
+&& CFLAGS="${COLOPL_PHP_CFLAGS} ${COLOPL_CFLAGS}" \
+   CPPFLAGS="${COLOPL_PHP_CPPFLAGS} ${COLOPL_CPPFLAGS}" \
+   LDFLAGS="${COLOPL_PHP_LDFLAGS} ${COLOPL_LDFLAGS}" \
+   ./configure --with-php-config="$(which "php-config")" \
+&& TEST_PHP_ARGS="--show-diff -q" make -j"$(nproc)" test \
+&& make install \
+&& cd - 

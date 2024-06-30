@@ -1,0 +1,3 @@
+#!/bin/sh -e
+
+test "x$(php -dzend_extension="xdebug" -m | grep "xdebug")" != "x"

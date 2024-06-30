@@ -1,0 +1,6 @@
+!/bin/sh -e
+
+test "x$(php -dextension="apcu" -m | grep "apcu")" != "x" && \
+cd "src" && \
+  make test && \
+cd - 
