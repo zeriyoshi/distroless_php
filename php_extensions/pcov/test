@@ -1,0 +1,3 @@
+#!/bin/sh -e
+
+test "x$(php -dextension="pcov" -m | grep "pcov")" != "x"

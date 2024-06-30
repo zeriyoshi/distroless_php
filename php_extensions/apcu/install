@@ -1,0 +1,11 @@
+#!/bin/sh -e
+
+cd "src" \
+&& phpize \
+&& CFLAGS="${DISTROLESS_PHP_CFLAGS} ${DISTROLESS_CFLAGS}" \
+   CPPFLAGS="${DISTROLESS_PHP_CPPFLAGS} ${DISTROLESS_CPPFLAGS}" \
+   LDFLAGS="${DISTROLESS_PHP_LDFLAGS} ${DISTROLESS_LDFLAGS}" \
+   ./configure --with-php-config="$(which "php-config")" \
+&& make -j"$(nproc)" \
+&& make install \
+&& cd - 

@@ -1,0 +1,11 @@
+#!/bin/sh -e
+
+cd "src" \
+&& phpize \
+&& ./configure --with-php-config="$(which "php-config")" \
+     --enable-redis-igbinary \
+     --enable-redis-msgpack \
+     --enable-redis-ztsd \
+&& make -j"$(nproc)" \
+&& make install \
+&& cd - 
