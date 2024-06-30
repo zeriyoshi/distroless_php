@@ -1,0 +1,68 @@
+[submodule "alpinelinux/aports"]
+	path = third_party/alpinelinux/aports
+	url = https://github.com/alpinelinux/aports.git
+	branch = v3.20.1
+[submodule "zeriyoshi/dependency_resolve"]
+	path = third_party/zeriyoshi/dependency_resolve
+	url = https://github.com/zeriyoshi/dependency_resolve.git
+	branch = master
+[submodule "unicode-org/icu"]
+	path = third_party/unicode-org/icu
+	url = https://github.com/unicode-org/icu.git
+	branch = release-75-1
+[submodule "GNOME/libxml2"]
+	path = third_party/GNOME/libxml2
+	url = https://github.com/GNOME/libxml2.git
+	branch = v2.12.8
+[submodule "docker-library/php"]
+	path = third_party/docker-library/php
+	url = https://github.com/docker-library/php.git
+	branch = master
+[submodule "php/php-src"]
+	path = third_party/php/php-src
+	url = https://github.com/php/php-src.git
+	branch = php-8.3.8
+[submodule "krakjoe/apcu"]
+	path = php_extensions/apcu/src
+	url = https://github.com/krakjoe/apcu.git
+	branch = v5.1.23
+[submodule "colopl/php-colopl_bc"]
+	path = php_extensions/colopl_bc/src
+	url = https://github.com/colopl/php-colopl_bc.git
+	branch = 11.0.0
+[submodule "DataDog/dd-trace-php"]
+	path = php_extensions/dd-trace-php/src
+	url = https://github.com/DataDog/dd-trace-php.git
+	branch = 1.1.0
+[submodule "grpc/grpc"]
+	path = php_extensions/grpc/src
+	url = https://github.com/grpc/grpc.git
+	branch = v1.64.2
+[submodule "igbinary/igbinary"]
+	path = php_extensions/igbinary/src
+	url = https://github.com/igbinary/igbinary.git
+	branch = 3.2.15
+[submodule "msgpack/msgpack-php"]
+	path = php_extensions/msgpack/src
+	url = https://github.com/msgpack/msgpack-php.git
+	branch = msgpack-2.2.0
+[submodule "krakjoe/pcov"]
+	path = php_extensions/pcov/src
+	url = https://github.com/krakjoe/pcov.git
+	branch = v1.0.11
+[submodule "protocolbuffers/protobuf"]
+	path = php_extensions/protobuf/src
+	url = https://github.com/protocolbuffers/protobuf.git
+	branch = v27.2
+[submodule "xdebug/xdebug"]
+	path = php_extensions/xdebug/src
+	url = https://github.com/xdebug/xdebug.git
+	branch = 3.3.2
+[submodule "php/pecl-file_formats-yaml"]
+	path = php_extensions/yaml/src
+	url = https://github.com/php/pecl-file_formats-yaml.git
+	branch = 2.2.3
+[submodule "phpredis/phpredis"]
+	path = php_extensions/z_redis/src
+	url = https://github.com/phpredis/phpredis.git
+	branch = 6.0.2
