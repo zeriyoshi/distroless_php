@@ -1,0 +1,24 @@
+[submodule "alpinelinux/aports"]
+	path = third_party/alpinelinux/aports
+	url = https://github.com/alpinelinux/aports.git
+	branch = v3.20.1
+[submodule "zeriyoshi/dependency_resolve"]
+	path = third_party/zeriyoshi/dependency_resolve
+	url = https://github.com/zeriyoshi/dependency_resolve.git
+	branch = master
+[submodule "unicode-org/icu"]
+	path = third_party/unicode-org/icu
+	url = https://github.com/unicode-org/icu.git
+	branch = release-75-1
+[submodule "GNOME/libxml2"]
+	path = third_party/GNOME/libxml2
+	url = https://github.com/GNOME/libxml2.git
+	branch = v2.13.1
+[submodule "docker-library/php"]
+	path = third_party/docker-library/php
+	url = https://github.com/docker-library/php.git
+	branch = master
+[submodule "php/php-src"]
+	path = third_party/php/php-src
+	url = https://github.com/php/php-src.git
+	branch = php-8.3.8

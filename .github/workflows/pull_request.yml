@@ -1,0 +1,20 @@
+name: Pull requet checks
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
+      - name: Check .gitmodules ref
+        run: |
+          ./maintenance/check_branch.sh
