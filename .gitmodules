@@ -21,7 +21,7 @@
 [submodule "php/php-src"]
 	path = third_party/php/php-src
 	url = https://github.com/php/php-src.git
-	branch = php-8.3.8
+	branch = php-8.3.9
 [submodule "krakjoe/apcu"]
 	path = php_extensions/apcu/src
 	url = https://github.com/krakjoe/apcu.git
