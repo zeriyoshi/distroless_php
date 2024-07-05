@@ -29,7 +29,7 @@
 [submodule "colopl/php-colopl_bc"]
 	path = php_extensions/colopl_bc/src
 	url = https://github.com/colopl/php-colopl_bc.git
-	branch = 11.0.0
+	branch = 11.0.1
 [submodule "DataDog/dd-trace-php"]
 	path = php_extensions/dd-trace-php/src
 	url = https://github.com/DataDog/dd-trace-php.git
